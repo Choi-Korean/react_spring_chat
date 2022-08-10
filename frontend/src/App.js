@@ -1,15 +1,10 @@
-import logo from './logo.svg';
 import './App.css';
+import HomePage from './components/HomePage';
 
 function App() {
   return (
-    <div className="bg-gray-500">
-      <div className="h-16 flex items-center">
-        <p>Hiii</p>
-      </div>
-      <h1 className="text-3xl font-bold underline">
-        Hello world!asdasdsda
-      </h1>
+    <div className="App">
+      <HomePage />
     </div>
   );
 }

@@ -2,21 +2,48 @@ package com.example.demo.model.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.model.dao.AccountRepository;
 import com.example.demo.model.dto.AccountDTO;
+import com.example.demo.model.dto.AccountDetails;
+import com.example.demo.model.dto.JwtRequestDto;
 import com.example.demo.model.entity.Account;
 import com.example.demo.model.entity.Role;
 
+import lombok.AllArgsConstructor;
+
 @Service
+@Transactional
 public class AccountService {
 	
 	@Autowired
-	AccountRepository accountRepository;
+	private AccountRepository accountRepository;
 	
 	private ModelMapper modelMapper = new ModelMapper();
+	
+	private AuthenticationManager authenticationManager;
+
+    public String login(JwtRequestDto jwtRequestDto) throws Exception {
+    	System.out.println(jwtRequestDto.getEmail());
+    	Authentication authentication = null;
+    	try {
+    		authentication = authenticationManager.authenticate(
+    				new UsernamePasswordAuthenticationToken(jwtRequestDto.getEmail(), jwtRequestDto.getUpw()));
+		} catch (Exception e) {
+			System.out.println(e);
+		}
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        AccountDetails accountDetails = (AccountDetails) authentication.getPrincipal();
+        System.out.println(accountDetails);
+        return accountDetails.getUsername();
+    }
 	
 	public AccountDTO createAccount(AccountDTO accountDTO) {
 		

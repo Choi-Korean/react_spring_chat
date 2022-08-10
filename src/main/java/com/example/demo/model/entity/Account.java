@@ -64,8 +64,10 @@ public class Account {
 	
 //	 // cascade의 : 엔티티들의 영속관계를 한번에 처리하기 위한 설정
 //	 //fetch member와 member_role을 둘다 동시에 조회하기 위해 EAGER 설정
-//	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
-//	@JoinColumn(name="uid")
-//	private List<Role> roles;
+	// Role table에 uid 컬럼명이 있고, 그걸로 Account와 Mapping시키는 것.
+	// Account table엔 따로 Role 표기 없음
+	@OneToMany(cascade=CascadeType.ALL, fetch=FetchType.EAGER)
+	@JoinColumn(name="uid")
+	private List<Role> roles;
 	
 }

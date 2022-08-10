@@ -4,6 +4,9 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.example.demo.model.entity.Account;
 
+
 public interface AccountRepository extends CrudRepository<Account, Long>  {
+
+	Account findAccountByEmail(String email);
 
 }
