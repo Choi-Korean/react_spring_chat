@@ -28,10 +28,10 @@ public class AccountService {
 	
 	private ModelMapper modelMapper = new ModelMapper();
 	
+	@Autowired
 	private AuthenticationManager authenticationManager;
 
     public String login(JwtRequestDto jwtRequestDto) throws Exception {
-    	System.out.println(jwtRequestDto.getEmail());
     	Authentication authentication = null;
     	try {
     		authentication = authenticationManager.authenticate(
@@ -41,7 +41,6 @@ public class AccountService {
 		}
         SecurityContextHolder.getContext().setAuthentication(authentication);
         AccountDetails accountDetails = (AccountDetails) authentication.getPrincipal();
-        System.out.println(accountDetails);
         return accountDetails.getUsername();
     }
 	
