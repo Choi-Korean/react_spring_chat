@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import Login from './Login';
 import Signup from './Signup';
 
 export default class HomePage extends Component{
@@ -25,6 +26,7 @@ export default class HomePage extends Component{
             <Routes> 
                 <Route path='/*' element={this.renderHomePage()}></Route>
                 <Route path='/signup' element={<Signup />}/>
+                <Route path='/login' element={<Login />}/>
             </Routes>
         </Router>);
     }
