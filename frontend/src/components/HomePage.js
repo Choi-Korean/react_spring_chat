@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Routes, Route} from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Link} from "react-router-dom";
 import Login from './Login';
 import Signup from './Signup';
 
@@ -14,9 +14,9 @@ export default class HomePage extends Component{
     renderHomePage(){
         return (
             <div className="h-16 flex items-center bg-gray-500">
-                <a href="/signup">회원가입</a>
+                <Link to="/signup">회원가입</Link>
                 <br></br>
-                <a href="/login">로그인</a>
+                <Link to="/login">로그인</Link>
             </div>
         );
     }

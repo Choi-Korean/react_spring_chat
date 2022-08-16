@@ -25,8 +25,14 @@ public class AccountController {
 	private AccountService accountService;
 	
 	@PostMapping(value="/login", produces=MediaType.APPLICATION_JSON_VALUE)
-    public String login(JwtRequestDto jwtRequestDto) {
+    public String login(JwtRequestDto jwtRequestDto, HttpServletRequest req) {
+		System.out.println(jwtRequestDto.getEmail());
         try {
+        	// Header name print 해보기. Postman으로 보내면 referer 없지만, 브라우저로 보내면 있음
+//        	req.getHeaderNames().asIterator().forEachRemaining(a -> System.out.println(a));
+        	// Referer : 현재 요청 들어온 페이지의 이전 페이지에 대한 주소정보 등 포함
+//        	System.out.println(req.getHeader("referer"));
+        	req.getSession().setAttribute("prevPage", req.getHeader("referer"));
             return accountService.login(jwtRequestDto);
         } catch (Exception e) {
             return e.getMessage();
@@ -35,7 +41,7 @@ public class AccountController {
 	
 	@PostMapping("/create")
 	public AccountDTO create(AccountDTO accountDTO, Model model, MultipartFile file, HttpServletRequest req) {
-		System.out.println(accountDTO);
+		req.getHeaderNames().asIterator().forEachRemaining(a -> System.out.println(a));
 		return accountService.createAccount(accountDTO);
 	}
 }

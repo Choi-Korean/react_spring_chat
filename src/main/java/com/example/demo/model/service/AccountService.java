@@ -20,7 +20,7 @@ import com.example.demo.model.entity.Role;
 import lombok.AllArgsConstructor;
 
 @Service
-@Transactional
+//@Transactional
 public class AccountService {
 	
 	@Autowired
@@ -39,6 +39,7 @@ public class AccountService {
 		} catch (Exception e) {
 			System.out.println(e);
 		}
+    	
         SecurityContextHolder.getContext().setAuthentication(authentication);
         AccountDetails accountDetails = (AccountDetails) authentication.getPrincipal();
         return accountDetails.getUsername();

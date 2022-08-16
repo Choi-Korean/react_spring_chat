@@ -10,9 +10,12 @@ import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
+
+import com.example.demo.handler.AccountLoginSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
@@ -25,11 +28,19 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	}
 	
 	// 개발환경 편의를 위해 접근권한 풀어주기
+	// 로그인 성공 및 실패시 redirect url. spring + react이기에, maven build한 정적 index.html 매핑시켜줘야 함
+	// 근데 이게 맞나?
 	@Override
 	protected void configure(HttpSecurity http) throws Exception{
 		http.authorizeRequests()
 			.antMatchers("/admin/**").hasRole("ADMIN")
 			.antMatchers("/**").permitAll();
+//			.and().formLogin() .loginPage("/login")	// 로그인 url 설정 추가 등록
+//			.loginProcessingUrl("/login")
+//			.defaultSuccessUrl("/index.html", true)
+//			.failureUrl("/login")
+//			.and()
+//			.logout();
 		
 		// cors csrf 인증 해제. 개발 편의 위해
 		http.cors().and().csrf().disable();
@@ -39,6 +50,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //		.authorizeRequests()
 //			.antMatchers("/", "/home").permitAll()
 //			.anyRequest().authenticated()
+		// 아래 로그인 설정은 했으니 뺴고
 //			.and()
 //		.formLogin()
 //			.loginPage("/login")
@@ -75,5 +87,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	public BCryptPasswordEncoder encodePassword() {
 		return new BCryptPasswordEncoder();
     }
+	
+	// 로그인 성공시 redirect할 url 설정한 handler bean에 등록
+	// spring + react이기에, maven build한 정적 index.html 매핑시켜줘야 함
+	// 근데 이게 맞나?
+	@Bean
+	public AuthenticationSuccessHandler successHandler() {
+		return new AccountLoginSuccessHandler("/index"); // default로 이동할 url
+	}
 
 }
