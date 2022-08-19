@@ -12,17 +12,37 @@ function Login(props) {
     const navigate = useNavigate();
     const CSRFToken = new Cookies();
 
-    // useEffect(() => {
-    //     checkLogined();
-    //     }
-    // )
+    useEffect(() => {
+        checkLogined();
+    
+    }, [])
 
-    // const checkLogined = () => {
-    //     if(localStorage.getItem('token')){
-    //         navigate("/info");
-    //         window.location.reload();
-    //     }
-    // }
+    const checkLogined = () => {
+        fetch("/api/account/islogined")
+        .then((res) => {
+            if(res.ok){
+            navigate("/");
+            }
+            return res.json();
+        })
+        // .then(data => {
+        //     console.log(data);
+        //     setPostData({
+        //         id: data.id,
+        //         name: data.name,
+        //         display_name: data.display_name,
+        //         price: data.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+        //         sale_price: data.sale_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
+        //         image: data.image,
+        //         category: data.category,
+        //         market: data.market,
+        //     });
+        // });
+        // if(localStorage.getItem('token')){
+        //     navigate("/info");
+        //     window.location.reload();
+        // }
+    }
 
     // json으로 보내니까 DTO로 보내는 방식으로 못받음. 우선 이렇게 formData로
     const handleCreateButtonPressed = () => {
@@ -39,16 +59,19 @@ function Login(props) {
         fetch("/api/account/login", requestOptions)
             .then((response) => {
                 if(response.ok){
-                    console.log(response.url);
-                    return response} //.json()}
+                    // console.log(response.url);
+                    // console.log(response.headers.user);
+                    return response.json()} //.json()}
                 else{
                     return;
                 }})
             .then((data) => {
+                console.log(data);
                 if(data != undefined){
                     console.log(data);
+                    // console.log(data.json());
                     // props.userHasAuthenticated(true, data.username, data.token);
-                    // checkLogined();
+                    checkLogined();
                 }
             }
         );
