@@ -17,11 +17,12 @@
   },
   "proxy": "http://localhost:808",
   "scripts": {
-    "start": "react-scripts start",
+    "start": "cd ../&&start mvnw.cmd clean install&&cd frontend/&&react-scripts start",
+    "startspring": "cd ../&&start cmd /k java -jar target/chat-0.0.1-SNAPSHOT.war",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "watch": "npm-watch"
+    "watch": "npm-watch&&cd ../&&start mvnw.cmd clean install"
   },
   "eslintConfig": {
     "extends": [

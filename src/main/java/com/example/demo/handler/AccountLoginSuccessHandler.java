@@ -15,22 +15,22 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
 
 public class AccountLoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler{
 	
-	public AccountLoginSuccessHandler(String defaultTargetUrl) {
-        setDefaultTargetUrl(defaultTargetUrl);
-    }
-	
-    @Override
-    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        if (session != null) {
-        	// AccountService에서 로그인 성공시 담아둔 세션 꺼내기
-            String redirectUrl = (String) session.getAttribute("prevPage");
-            if (redirectUrl != null) {
-                session.removeAttribute("prevPage");
-                getRedirectStrategy().sendRedirect(request, response, redirectUrl);
-                } else {
-                super.onAuthenticationSuccess(request, response, authentication);
-                }
-        }
-    }
+//	public AccountLoginSuccessHandler(String defaultTargetUrl) {
+//        setDefaultTargetUrl(defaultTargetUrl);
+//    }
+//	
+//    @Override
+//    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws ServletException, IOException {
+//        HttpSession session = request.getSession();
+//        if (session != null) {
+//        	// AccountService에서 로그인 성공시 담아둔 세션 꺼내기
+//            String redirectUrl = (String) session.getAttribute("prevPage");
+//            if (redirectUrl != null) {
+//                session.removeAttribute("prevPage");
+//                getRedirectStrategy().sendRedirect(request, response, redirectUrl);
+//                } else {
+//                super.onAuthenticationSuccess(request, response, authentication);
+//                }
+//        }
+//    }
 }

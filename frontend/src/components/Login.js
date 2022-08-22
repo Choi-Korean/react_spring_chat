@@ -14,7 +14,6 @@ function Login(props) {
 
     useEffect(() => {
         checkLogined();
-    
     }, [])
 
     const checkLogined = () => {

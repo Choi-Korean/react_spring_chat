@@ -89,11 +89,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 	
 	// 로그인 성공시 redirect할 url 설정한 handler bean에 등록
-	// spring + react이기에, maven build한 정적 index.html 매핑시켜줘야 함
-	// 근데 이게 맞나?
-	@Bean
-	public AuthenticationSuccessHandler successHandler() {
-		return new AccountLoginSuccessHandler("/index"); // default로 이동할 url
-	}
+	// react와 연동이 잘 안되어서 우선 안쓰고 보류
+//	@Bean
+//	public AuthenticationSuccessHandler successHandler() {
+//		return new AccountLoginSuccessHandler("/index"); // default로 이동할 url
+//	}
 
 }
