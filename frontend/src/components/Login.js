@@ -5,47 +5,37 @@ import { Button } from '@material-ui/core';
 import { useNavigate } from 'react-router-dom';
 import { Cookies } from "react-cookie";
 
-function Login(props) {
+function Login() {
 
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
-    const navigate = useNavigate();
     const CSRFToken = new Cookies();
-
-    useEffect(() => {
-        // checkLogined();
-    }, [])
 
     const checkLogined = () => {
         fetch("/api/account/islogined")
         .then((res) => {
             if(res.ok){
-                navigate("/");
-                window.location.reload();
+                return res.json();
             }
-            return res.json();
+        }).then((user) => {
+            if(user !== undefined){
+                localStorage.setItem('user', user.email);
+                let loc = localStorage.getItem('from');
+                window.localStorage.removeItem('from');
+                console.log(loc);
+                if(loc !== null){
+                    window.location.replace(loc);
+                    window.localStorage.removeItem('from');
+                }else{
+                    window.location.replace("/");
+                }
+            }
         })
-        // .then(data => {
-        //     console.log(data);
-        //     setPostData({
-        //         id: data.id,
-        //         name: data.name,
-        //         display_name: data.display_name,
-        //         price: data.price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-        //         sale_price: data.sale_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","),
-        //         image: data.image,
-        //         category: data.category,
-        //         market: data.market,
-        //     });
-        // });
-        // if(localStorage.getItem('token')){
-        //     navigate("/info");
-        //     window.location.reload();
-        // }
+        
     }
 
     // json으로 보내니까 DTO로 보내는 방식으로 못받음. 우선 이렇게 formData로
-    const handleCreateButtonPressed = () => {
+    const handleLoginButtonPressed = () => {
         const uploadData = new FormData();
         uploadData.append('upw', password);
         uploadData.append('email', username);
@@ -66,10 +56,7 @@ function Login(props) {
                     return;
                 }})
             .then((data) => {
-                console.log(data);
-                if(data != undefined){
-                    console.log(data);
-                    // console.log(data.json());
+                if(data !== undefined){
                     // props.userHasAuthenticated(true, data.username, data.token);
                     checkLogined();
                 }
@@ -95,7 +82,7 @@ function Login(props) {
                 <div className="card-body">
                     <input type="text" name="username" autofocus="" autocapitalize="none" autocomplete="username" maxlength="150" className="form-control" placeholder="아이디" required="" id="id_username" onChange={(e) => handleUserName(e)} />
                     <input type="password" name="password" autocomplete="current-password" className="form-control" placeholder="비밀번호" required="" id="id_password" onChange={(e) => handlePassword(e)} />
-                    <button type="submit" className="btn-outline-primary" onClick={() => handleCreateButtonPressed()}><i className='fas fa-user-plus'></i>로그인</button>
+                    <button type="submit" className="btn-outline-primary" onClick={() => handleLoginButtonPressed()}><i className='fas fa-user-plus'></i>로그인</button>
                     {/* <button type="reset" class="btn-outline-primary">취소</button> */}
                 </div>
             </div>

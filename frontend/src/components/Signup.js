@@ -7,8 +7,6 @@ function Signup({ }) {
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
     const [email, setEmail] = useState();
-    // const [image, setImage] = useState();
-    const navigate = useNavigate();
     const CSRFToken = new Cookies();
 
     const handleCreateButtonPressed = () => {
