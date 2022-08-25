@@ -13,14 +13,15 @@ function Login(props) {
     const CSRFToken = new Cookies();
 
     useEffect(() => {
-        checkLogined();
+        // checkLogined();
     }, [])
 
     const checkLogined = () => {
         fetch("/api/account/islogined")
         .then((res) => {
             if(res.ok){
-            navigate("/");
+                navigate("/");
+                window.location.reload();
             }
             return res.json();
         })

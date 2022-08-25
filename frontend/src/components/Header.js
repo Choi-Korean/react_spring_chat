@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-export default function Header() {
+export default function Header({user}) {
+
+    const { email, name} = user || {};
 
     useEffect(() => {
     },[]);
@@ -12,8 +14,8 @@ export default function Header() {
             .then((response) => response)
             .then((data) => {
                 console.log(data);
-                // window.localStorage.removeItem('token');
-                // setToken("");
+                window.localStorage.removeItem('user');
+                window.location.reload();
             }
         );
     }
