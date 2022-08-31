@@ -70,4 +70,16 @@ public class Account {
 	@JoinColumn(name="uid")
 	private List<Role> roles;
 	
+	@OneToMany(cascade=CascadeType.ALL) //, fetch=FetchType.EAGER)
+	@JoinColumn(name="id")
+	private List<Chat> chats;
+	
+	@OneToMany(cascade=CascadeType.ALL) //, fetch=FetchType.EAGER)
+	@JoinColumn(name="id")
+	private List<ChatRoom> chatRooms;
+	
+	@OneToMany(cascade=CascadeType.ALL) //, fetch=FetchType.EAGER)
+	@JoinColumn(name="id")
+	private List<ChatParticipants> chatParticipants;
+	
 }
